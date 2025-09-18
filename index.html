@@ -2,140 +2,385 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SwiftBiz Automation</title>
-  <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- AOS Library -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #00bfa6; /* teal */
+      --primary-dark: #009688;
+      --dark-blue: #0a192f;
+      --light-bg: #f9fbfd;
+      --text-dark: #1a2a3a;
+      --text-muted: #555;
+      --card-bg: #ffffff;
+      --accent: #0066cc;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: var(--light-bg);
+      color: var(--text-dark);
+      line-height: 1.6;
+      scroll-behavior: smooth;
+    }
+
+    header {
+      background: var(--dark-blue);
+      color: white;
+      padding: 80px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0 0 15px;
+      font-size: 2.8em;
+      font-weight: 700;
+    }
+
+    header h1 span {
+      color: var(--primary);
+    }
+
+    header p {
+      font-size: 1.2em;
+      margin-bottom: 25px;
+      color: #e0f7f4;
+    }
+
+    /* Teal Buttons consistent */
+    .btn-consistent {
+      background: var(--primary);
+      color: white;
+      padding: 15px 35px;
+      font-weight: bold;
+      font-size: 1.1em;
+      text-decoration: none;
+      border-radius: 8px;
+      display: inline-block;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      cursor: pointer;
+      border: none; /* removes default black border */
+    }
+
+    .btn-consistent:hover {
+      background: var(--primary-dark);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+    }
+
+    section {
+      padding: 70px 20px;
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    h2 {
+      color: var(--accent);
+      margin-bottom: 40px;
+      font-size: 1.9em;
+      text-align: center;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 25px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      text-align: center;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    }
+
+    .card h3 {
+      margin-top: 0;
+      color: var(--primary-dark);
+      font-size: 1.4em;
+      margin-bottom: 12px;
+    }
+
+    .card p {
+      color: var(--text-muted);
+      font-size: 1.05em;
+    }
+
+    .price {
+      font-size: 1.2em;
+      color: var(--accent);
+      font-weight: bold;
+      margin: 10px 0;
+    }
+
+    .workflow {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 20px;
+    }
+
+    .step {
+      flex: 1 1 200px;
+      text-align: center;
+    }
+
+    .step-circle {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3em;
+      margin: 0 auto 15px;
+      box-shadow: 0 4px 12px rgba(0,191,166,0.4);
+    }
+
+    .step p {
+      margin: 0;
+      font-size: 1.05em;
+    }
+
+    .testimonial {
+      font-style: italic;
+      color: var(--text-muted);
+    }
+
+    /* Contact Form */
+    .contact-form {
+      background: var(--card-bg);
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+      max-width: 700px;
+      margin: auto;
+    }
+
+    .contact-form label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+      color: var(--text-dark);
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+      width: 100%;
+      padding: 12px 15px;
+      margin-bottom: 20px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 1em;
+      font-family: inherit;
+      transition: border 0.3s ease;
+    }
+
+    .contact-form input:focus,
+    .contact-form textarea:focus {
+      border: 1px solid var(--primary);
+      outline: none;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px 20px;
+      background: var(--dark-blue);
+      color: #e0f7f4;
+      font-size: 0.9em;
+      margin-top: 40px;
+    }
+
+    footer a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 768px) {
+      header h1 { font-size: 2.2em; }
+      header p { font-size: 1.1em; }
+      .workflow { flex-direction: column; }
+      .btn-consistent { width: 90%; margin: 20px auto; display: block; }
+    }
+  </style>
 </head>
 <body>
-  <!-- Navigation -->
-  <nav class="navbar">
-    <div class="nav-brand">SwiftBiz Automation</div>
-    <button class="nav-toggle" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
-    <ul class="nav-menu">
-      <li><a href="#services">Services</a></li>
-      <li><a href="#how-it-works">How It Works</a></li>
-      <li><a href="#testimonials">Testimonials</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-  </nav>
 
-  <!-- Hero Section -->
-  <header class="hero">
-    <div class="container hero-content">
-      <h1>Save Time & Grow Your Small Business<br>with Automation</h1>
-      <p>Appointments, invoicing, follow-ups, and social media – fully automated for you</p>
-      <a href="https://calendly.com/swiftbiz-automation/consultation" target="_blank" class="cta-btn big">Book a Free 15-Minute Consultation</a>
-    </div>
-    <div class="hero-visual"></div>
+  <!-- Header -->
+  <header data-aos="fade-down">
+    <h1><span>⚡</span> SwiftBiz Automation</h1>
+    <p>Save time. Grow faster. Automate your small business with ease.</p>
+    <a class="btn-consistent" href="#contact">Book a Free 15-Minute Consultation</a>
   </header>
 
-  <!-- Services Section -->
-  <section class="services" id="services">
-    <div class="container">
-      <h2>Our Services</h2>
-      <div class="service-list">
-        <div class="service-card">
-          <h3>Quick Setup</h3>
-          <p class="price">$200–$300</p>
-          <p>Get started fast</p>
-        </div>
-        <div class="service-card">
-          <h3>Growth Automation</h3>
-          <p class="price">$350 + $50/month</p>
-          <p>Automate emails, appointments, and social media</p>
-        </div>
-        <div class="service-card">
-          <h3>Full-Service Automation</h3>
-          <p class="price">$500 + $100/month</p>
-          <p>Complete turnkey system</p>
-        </div>
+  <!-- Services -->
+  <section>
+    <h2 data-aos="fade-up">Our Services</h2>
+    <div class="card-grid">
+      <div class="card" data-aos="zoom-in" data-aos-delay="100">
+        <h3>✅ Quick Setup</h3>
+        <div class="price">$200–$300</div>
+        <p>Get your business automation-ready in days, not weeks. Perfect for small businesses starting out.</p>
+      </div>
+      <div class="card" data-aos="zoom-in" data-aos-delay="200">
+        <h3>🚀 Growth Automation</h3>
+        <div class="price">$350 + $50/mo</div>
+        <p>Automate emails, bookings, and social media. Grow without the extra workload.</p>
+      </div>
+      <div class="card" data-aos="zoom-in" data-aos-delay="300">
+        <h3>🎯 Full-Service Automation</h3>
+        <div class="price">$500 + $100/mo</div>
+        <p>All-in-one automation system. Appointments, invoicing, follow-ups, and marketing fully managed.</p>
       </div>
     </div>
   </section>
 
-  <!-- How It Works Section -->
-  <section class="how-it-works" id="how-it-works">
-    <div class="container">
-      <h2>How It Works</h2>
-      <ol>
-        <li>Book a consultation (15 minutes)</li>
-        <li>Fill out intake form</li>
-        <li>We set up your automation system</li>
-        <li>Start saving time and growing revenue</li>
-      </ol>
-    </div>
-  </section>
-
-  <!-- Testimonials Section -->
-  <section class="testimonials" id="testimonials">
-    <div class="container">
-      <h2>Testimonials</h2>
-      <div class="carousel">
-        <div class="carousel-inner">
-          <div class="testimonial active">
-            <p>"SwiftBiz Automation saved me hours every week!"</p>
-            <span>– Jane Doe, Doe Accounting</span>
-          </div>
-          <div class="testimonial">
-            <p>"Their setup was fast and the automation works perfectly."</p>
-            <span>– John Smith, Smith Realty</span>
-          </div>
-        </div>
-        <button class="carousel-btn carousel-prev" aria-label="Previous testimonial">&#10094;</button>
-        <button class="carousel-btn carousel-next" aria-label="Next testimonial">&#10095;</button>
+  <!-- How It Works -->
+  <section>
+    <h2 data-aos="fade-up">How It Works</h2>
+    <div class="workflow">
+      <div class="step" data-aos="fade-up" data-aos-delay="100">
+        <div class="step-circle">1</div>
+        <p>Book a 15-min consultation</p>
+      </div>
+      <div class="step" data-aos="fade-up" data-aos-delay="200">
+        <div class="step-circle">2</div>
+        <p>Fill out a simple intake form</p>
+      </div>
+      <div class="step" data-aos="fade-up" data-aos-delay="300">
+        <div class="step-circle">3</div>
+        <p>We build your automation system</p>
+      </div>
+      <div class="step" data-aos="fade-up" data-aos-delay="400">
+        <div class="step-circle">4</div>
+        <p>Launch & save hours every week</p>
       </div>
     </div>
   </section>
 
-  <!-- About Section -->
-  <section class="about" id="about">
-    <div class="container">
-      <h2>About SwiftBiz</h2>
-      <div class="about-card">
-        <p>Helping local small businesses save time and grow with simple, affordable automation.</p>
+  <!-- Testimonials -->
+  <section>
+    <h2 data-aos="fade-up">What Our Clients Say</h2>
+    <div class="card-grid">
+      <div class="card testimonial" data-aos="fade-right">
+        "SwiftBiz Automation saved us hours every week! Highly recommend."  
+        <br>– Jane D.
+      </div>
+      <div class="card testimonial" data-aos="fade-left">
+        "Our bookings and invoicing are fully automated now, and revenue is up!"  
+        <br>– John S.
       </div>
     </div>
   </section>
 
-  <!-- Contact & CTA Section -->
-  <section class="contact" id="contact">
-    <div class="container">
-      <h2>Ready to automate your business?</h2>
-      <a href="https://calendly.com/swiftbiz-automation/consultation" target="_blank" class="cta-btn">Book Now</a>
-      <p>Email: <a href="mailto:your@email.com">your@email.com</a> &nbsp;|&nbsp; Phone: (555) 123-4567</p>
-      <a href="assets/swiftbiz-kit.pdf" download class="pdf-btn">Download Our PDF Kit</a>
-      <form id="contact-form" action="https://formspree.io/f/yourFormID" method="POST" class="contact-form" autocomplete="off">
-        <label for="name">Name</label>
-        <input type="text" id="name" name="name" required autocomplete="name">
+  <!-- About -->
+  <section>
+    <h2 data-aos="fade-up">About Us</h2>
+    <p data-aos="fade-up" data-aos-delay="100">
+      At <strong>SwiftBiz Automation</strong>, we believe small businesses deserve the same tools and efficiencies that large enterprises enjoy—without the complexity or cost.  
+      We specialize in creating tailored automation systems that handle time-consuming tasks like scheduling, invoicing, follow-ups, and social media management.  
+      <br><br>
+      Our mission is simple: <em>help business owners focus on growth, not busywork</em>.  
+      We’re based in Saskatchewan but proudly serve clients worldwide.
+    </p>
+  </section>
 
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" required autocomplete="email">
+  <!-- Contact Form -->
+  <section id="contact">
+    <h2 data-aos="fade-up">Get in Touch</h2>
+    <form class="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" data-aos="zoom-in">
+      <label for="name">Your Name</label>
+      <input type="text" name="name" id="name" required>
 
-        <label for="message">Message</label>
-        <textarea id="message" name="message" rows="4" required></textarea>
+      <label for="email">Your Email</label>
+      <input type="email" name="email" id="email" required>
 
-        <button type="submit" class="cta-btn">Send Message</button>
-      </form>
-      <div id="thank-you" class="thank-you-message">
-        <h3>Thank you!</h3>
-        <p>Your message has been sent.<br>We'll get back to you soon.</p>
+      <label for="message">Your Message</label>
+      <textarea name="message" id="message" rows="5" required></textarea>
+
+      <div style="text-align:center;">
+        <button type="submit" class="btn-consistent">Send Message</button>
       </div>
+    </form>
+
+    <!-- Hidden Thank You Message -->
+    <div id="thank-you" style="display:none; margin-top:30px; text-align:center;">
+      <h3>🎉 Thank you!</h3>
+      <p>Your message has been sent. We’ll get back to you shortly.</p>
+      <a href="https://calendly.com/swiftbizauto/30min" target="_blank" class="btn-consistent">Book a Free Consultation</a>
     </div>
   </section>
 
   <!-- Footer -->
   <footer>
-    <div class="container">
-      <div class="social-links">
-        <a href="https://instagram.com/swiftbizautomation" target="_blank" aria-label="Instagram">Instagram</a>
-        <a href="https://linkedin.com/in/swiftbizautomation" target="_blank" aria-label="LinkedIn">LinkedIn</a>
-        <a href="https://facebook.com/swiftbizautomation" target="_blank" aria-label="Facebook">Facebook</a>
-      </div>
-      <p>&copy; 2025 SwiftBiz Automation. All rights reserved.</p>
-    </div>
+    <p>Connect with us: 
+      <a href="#">Instagram</a> | 
+      <a href="#">LinkedIn</a> | 
+      <a href="#">Facebook</a>
+    </p>
+    <p>&copy; 2025 SwiftBiz Automation</p>
   </footer>
-  <script src="script.js"></script>
+
+  <!-- AOS JS -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init({
+      duration: 800,
+      easing: 'ease-in-out',
+      once: true
+    });
+  </script>
+
+  <!-- Formspree AJAX -->
+  <script>
+    const form = document.querySelector('.contact-form');
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const formData = new FormData(form);
+      const action = form.getAttribute('action');
+      const thankYou = document.getElementById('thank-you');
+
+      try {
+        const response = await fetch(action, {
+          method: 'POST',
+          body: formData,
+          headers: { 'Accept': 'application/json' }
+        });
+
+        if (response.ok) {
+          form.style.display = 'none';
+          thankYou.style.display = 'block';
+        } else {
+          alert("Oops! Something went wrong. Please try again.");
+        }
+      } catch (error) {
+        alert("Network error. Please check your connection and try again.");
+      }
+    });
+  </script>
 </body>
 </html>
